@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {ThemeContext} from "./providers/Theme";
 
 const Post = ({page}) => {
     const [postData, setPostData] = useState({});
+    const {theme, setTheme} = useContext(ThemeContext);
 
     useEffect(() => {
         setTimeout(() => fetch(`https://jsonplaceholder.typicode.com/posts/${page}`)
@@ -18,6 +20,10 @@ const Post = ({page}) => {
             <h1>{postData.title}</h1>
             <p>{postData.body}</p>
             <p>ID: {postData.id}</p>
+            <p>Поточна тема: {theme}</p>
+            <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+                Переключити тему
+            </button>
         </div>
     );
 };
