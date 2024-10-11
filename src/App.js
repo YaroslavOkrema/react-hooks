@@ -1,21 +1,15 @@
-import React, {useState} from "react";
-import Post from "./Post";
-import Theme from "./providers/Theme";
+import React, {useRef} from "react";
 function App() {
-  const [page, setPage] = useState(1)
+    const inputRef = useRef(null);
 
-  function addPage() {
-    setPage(page + 1);
-  }
+    const focusInput = () => {
+        inputRef.current.focus();
+    }
 
   return (
       <div>
-          <Theme>
-              <div>Page: {page}</div>
-              <button onClick={addPage}>Add page</button>
-              <hr/>
-              <Post page={page}/>
-          </Theme>
+          <input ref={inputRef} type="text"/>
+          <button onClick={focusInput}>Фокус на поле вводу</button>
       </div>
   );
 }
