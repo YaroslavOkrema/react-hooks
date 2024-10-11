@@ -1,25 +1,25 @@
-import React, {useMemo, useState} from "react";
+import React, {useReducer} from "react";
 function App() {
-    const [state, setState] = useState(1);
-    const [price, setPrice] = useState(10);
-    const [count, setCount] = useState(5);
+    const initialState = {count: 0};
 
-    function hardCalc(price, count) {
-        console.log("On");
-        return price * count;
+    function reducer(state, action) {
+        switch (action.type) {
+            case 'increment':
+                return {count: state.count + 1};
+            case 'decrement':
+                return {count: state.count - 1};
+            default:
+                return state;
+        }
     }
 
-    const hardRes = useMemo(() => hardCalc(price, count), [price, count]);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     return (
         <div>
-            <p>State {state}</p>
-            <p>Price {price}</p>
-            <p>Count {count}</p>
-            <p>Res: {hardRes}</p>
-            <button onClick={() => setState(state + 1)}>Update state</button>
-            <button onClick={() => setPrice(price + 1)}>Update state</button>
-            <button onClick={() => setCount(count + 1)}>Update state</button>
+            <p>Кількість: {state.count}</p>
+            <button onClick={() => dispatch({type: 'increment'})}>+</button>
+            <button onClick={() => dispatch({type: 'decrement'})}>-</button>
         </div>
     );
 }
